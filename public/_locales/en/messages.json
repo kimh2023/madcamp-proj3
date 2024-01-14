@@ -1,10 +1,10 @@
 {
   "extensionDescription": {
     "description": "Extension description",
-    "message": "Chrome extension boilerplate developed with Vite, React and Typescript"
+    "message": "Discover and Pin Products Instantly: VisionShop lets you easily identify products from any image on the web. With just a click, find similar items, save your favorites, and explore a world of visual shopping."
   },
   "extensionName": {
-    "description": "Extension name",
+    "description": "VisionShop: Visual Product Finder",
     "message": "Chrome extension boilerplate"
   }
 }
