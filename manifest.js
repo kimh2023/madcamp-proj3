@@ -1,21 +1,17 @@
 import fs from 'node:fs';
 const packageJson = JSON.parse(fs.readFileSync('./package.json', 'utf8'));
 
-/**
- * After changing, please reload the extension at `chrome://extensions`
- * @type {chrome.runtime.ManifestV3}
- */
 const manifest = {
   manifest_version: 3,
   default_locale: 'en',
-  /**
-   * if you want to support multiple languages, you can use the following reference
-   * https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Internationalization
-   */
-  name: '__MSG_extensionName__',
+  name: 'VisionShop: Visual Product Finder',
   version: packageJson.version,
-  description: '__MSG_extensionDescription__',
-  permissions: ['storage', 'sidePanel'],
+  description: `
+    Discover and Pin Products Instantly: VisionShop lets you easily identify 
+    products from any image on the web. With just a click, find similar items, 
+    save your favorites, and explore a world of visual shopping.
+  `,
+  permissions: ['storage', 'sidePanel', 'activeTab'], // 'activeTab' 권한 추가
   side_panel: {
     default_path: 'src/pages/sidepanel/index.html',
   },
@@ -38,8 +34,6 @@ const manifest = {
     {
       matches: ['http://*/*', 'https://*/*', '<all_urls>'],
       js: ['src/pages/content/index.js'],
-      // KEY for cache invalidation
-      css: ['assets/css/contentStyle<KEY>.chunk.css'],
     },
   ],
   devtools_page: 'src/pages/devtools/index.html',

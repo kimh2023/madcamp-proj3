@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import logo from '@assets/img/logo.svg';
 import '@pages/popup/Popup.css';
 import useStorage from '@src/shared/hooks/useStorage';
@@ -8,6 +8,24 @@ import withErrorBoundary from '@src/shared/hoc/withErrorBoundary';
 
 const Popup = () => {
   const theme = useStorage(exampleThemeStorage);
+  const [screenshot, setScreenshot] = useState(null);
+
+  useEffect(() => {
+    const handleMessage = message => {
+      // sender, sendResponse 제거
+      if (message.action === 'capturedImage') {
+        setScreenshot(message.imageUri);
+      }
+    };
+    chrome.runtime.onMessage.addListener(handleMessage);
+    return () => {
+      chrome.runtime.onMessage.removeListener(handleMessage);
+    };
+  }, []);
+
+  const handleCaptureClick = () => {
+    chrome.runtime.sendMessage({ action: 'captureTab' });
+  };
 
   return (
     <div
@@ -25,7 +43,7 @@ const Popup = () => {
           href="https://reactjs.org"
           target="_blank"
           rel="noopener noreferrer"
-          style={{ color: theme === 'light' && '#0281dc', marginBottom: '10px' }}>
+          style={{ color: theme === 'light' ? '#0281dc' : '#61dafb', marginBottom: '10px' }}>
           Learn React!
         </a>
         <button
@@ -37,6 +55,19 @@ const Popup = () => {
           Toggle theme
         </button>
       </header>
+      <button
+        onClick={handleCaptureClick}
+        style={{
+          backgroundColor: '#4CAF50',
+          color: 'white',
+          padding: '10px 20px',
+          margin: '10px',
+          border: 'none',
+          cursor: 'pointer',
+        }}>
+        Capture Screenshot
+      </button>
+      {screenshot && <img src={screenshot} alt="Captured Screenshot" style={{ maxWidth: '100%', height: 'auto' }} />}
     </div>
   );
 };
