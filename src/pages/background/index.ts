@@ -29,9 +29,15 @@ function captureActiveTab() {
   });
 }
 
+function openLoginPage() {
+  chrome.tabs.create({ url: chrome.runtime.getURL('pages/login/index.html') });
+}
+
 chrome.runtime.onMessage.addListener(request => {
   // sender, sendResponse 제거
   if (request.action === 'captureTab') {
     captureActiveTab();
+  } else if (request.action === 'openLogin  Page') {
+    openLoginPage();
   }
 });
