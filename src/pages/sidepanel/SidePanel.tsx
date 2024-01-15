@@ -10,11 +10,17 @@ const SidePanel = () => {
   const [capturedImages, setCapturedImages] = useState([]);
 
   useEffect(() => {
+    // 저장된 이미지 불러오기
+    const savedImages = JSON.parse(localStorage.getItem('capturedImages') || '[]');
+    setCapturedImages(savedImages);
+
     const handleMessage = message => {
       if (message.action === 'capturedImage') {
-        // 임시로 캡처된 이미지를 6개까지 저장합니다.
         const newImages = [...capturedImages, message.imageUri];
-        if (newImages.length > 6) newImages.shift();
+        if (newImages.length > 20) newImages.shift();
+
+        // 이미지 저장하기
+        localStorage.setItem('capturedImages', JSON.stringify(newImages));
         setCapturedImages(newImages);
       }
     };
