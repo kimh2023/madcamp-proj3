@@ -9,6 +9,12 @@ reloadOnUpdate('pages/background');
  */
 reloadOnUpdate('pages/content/style.scss');
 
+const handleActionClick = () => {
+  console.log('click');
+};
+
+chrome.action.onClicked.addListener(handleActionClick);
+
 console.log('background loaded');
 
 function captureActiveTab() {

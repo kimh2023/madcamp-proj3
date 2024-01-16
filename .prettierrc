@@ -1,1 +1,10 @@
-{}
+{
+  "trailingComma": "all",
+  "semi": true,
+  "singleQuote": true,
+  "arrowParens": "avoid",
+  "printWidth": 120,
+  "bracketSameLine": true,
+  "importOrder": ["<THIRD_PARTY_MODULES>"],
+  "htmlWhitespaceSensitivity": "strict"
+}
