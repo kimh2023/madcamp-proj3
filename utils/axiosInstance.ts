@@ -8,9 +8,9 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
   async (config) => {
     try {
-      const { token }: { token?: string } = await new Promise((resolve) => {
-        chrome.storage.local.get(["token"], (res) => {
-          resolve(res);
+      const token: { token?: string } = await new Promise((resolve) => {
+        chrome.storage.local.get(["session"], (res) => {
+          resolve(res.session?.token);
         });
       });
 
@@ -18,8 +18,6 @@ axiosInstance.interceptors.request.use(
         config.headers.Authorization = `Bearer ${token}`;
         config.withCredentials = true;
       }
-
-      console.log("headers: ", config.headers.Authorization);
 
       return config;
     } catch (error) {

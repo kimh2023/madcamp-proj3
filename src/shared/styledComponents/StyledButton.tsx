@@ -24,6 +24,7 @@ export const StyledButton = styled.button`
     "Helvetica Neue",
     sans-serif;
   font-size: 16px;
+  max-width: 300px;
 
   &:hover {
     background-color: #333333;
@@ -53,6 +54,7 @@ export const StyledButtonWhite = styled.button`
     "Helvetica Neue",
     sans-serif;
   font-size: 16px;
+  max-width: 300px;
 
   &:hover {
     background-color: #ddd;

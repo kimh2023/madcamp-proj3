@@ -1,3 +1,4 @@
+import { SessionDto } from "@root/src/shared/types";
 import reloadOnUpdate from "virtual:reload-on-update-in-background-script";
 import "webextension-polyfill";
 
@@ -45,41 +46,40 @@ function captureActiveTab() {
   });
 }
 
-function openLoginPage() {
-  chrome.tabs.create({ url: chrome.runtime.getURL("pages/login/index.html") });
-}
-
 chrome.runtime.onMessage.addListener((request) => {
   // sender, sendResponse 제거
   if (request.action === "captureTab") {
     captureActiveTab();
-  } else if (request.action === "openLogin") {
-    openLoginPage();
-  } else if (request.action === "setToken") {
-    setToken(request.message);
-  } else if (request.action === "getToken") {
-    getToken();
+    return true;
+  } else if (request.action === "setSession") {
+    setSession(request.message);
+    return true;
+  } else if (request.action === "getSession") {
+    getSession();
+    return true;
   }
 });
 
-const setToken = (value) => {
-  console.log("setToken");
-  chrome.storage.local.set({ token: value }, () => {
-    console.log("Token has been set:", value);
+const setSession = (value: SessionDto | null) => {
+  chrome.storage.local.set({ session: value }, () => {
+    console.log("Session has been set:", value);
   });
   chrome.runtime.sendMessage({
-    action: "token",
-    token: value,
+    action: "session",
+    token: value?.token,
+    userId: value?.userId,
+    isVerified: value?.isVerified,
   });
 };
 
-const getToken = () => {
-  console.log("getToken");
-  chrome.storage.local.get(["token"], (res) => {
-    const token: string = res.token;
+const getSession = () => {
+  chrome.storage.local.get(["session"], (res) => {
+    const session: SessionDto = res.session;
     chrome.runtime.sendMessage({
-      action: "token",
-      token: token,
+      action: "session",
+      token: session?.token,
+      userId: session?.userId,
+      isVerified: session?.isVerified,
     });
   });
 };

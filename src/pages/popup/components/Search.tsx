@@ -1,4 +1,5 @@
 import { StyledButton } from "@root/src/shared/styledComponents/StyledButton";
+import { StyledHeader1 } from "@root/src/shared/styledComponents/StyledText";
 import React from "react";
 
 const Search = () => {
@@ -8,13 +9,8 @@ const Search = () => {
 
   return (
     <React.Fragment>
-      <header className="App-header">
-        IS THERE SOMETHING INTERESTING HERE?
-      </header>
-      <StyledButton
-        onClick={handleCaptureClick}
-        style={{ marginTop: "auto", marginBottom: 10 }}
-      >
+      <StyledHeader1>IS THERE SOMETHING INTERESTING HERE?</StyledHeader1>
+      <StyledButton onClick={handleCaptureClick} style={{ marginTop: "auto" }}>
         SEARCH
       </StyledButton>
     </React.Fragment>

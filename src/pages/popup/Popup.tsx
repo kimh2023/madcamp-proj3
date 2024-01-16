@@ -15,22 +15,17 @@ const Popup = () => {
       // sender, sendResponse 제거
       if (message.action === "capturedImage") {
         setScreenshot(message.imageUri);
-      } else if (message.action === "token") {
-        console.log("token", message.token, !!message.token);
+      } else if (message.action === "session") {
         setLoginState(!!message.token);
       }
     };
     chrome.runtime.onMessage.addListener(handleMessage);
 
-    // chrome.runtime.sendMessage({
-    //   action: "setToken",
-    //   message: null,
-    // });
-    chrome.runtime.sendMessage({ action: "getToken" }, (token) => {
-      // is already logged in?
-      console.log("token", token, !!token);
-      setLoginState(!!token);
+    chrome.runtime.sendMessage({
+      action: "setSession",
+      message: null,
     });
+    chrome.runtime.sendMessage({ action: "getSession" });
 
     return () => {
       chrome.runtime.onMessage.removeListener(handleMessage);

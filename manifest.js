@@ -16,9 +16,6 @@ const manifest = {
     default_path: "src/pages/sidepanel/index.html",
   },
   options_page: "src/pages/options/index.html",
-  pages: {
-    login: "src/pages/auth/index.html",
-  },
   background: {
     service_worker: "src/pages/background/index.js",
     type: "module",
