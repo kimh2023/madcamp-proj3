@@ -59,6 +59,7 @@ const AdditionalInfo = () => {
               name: e.target.value,
             }))
           }
+          textAlign={"center"}
         />
         <StyledSelect
           placeholder={"INTERESTS"}
@@ -70,6 +71,7 @@ const AdditionalInfo = () => {
           setSelectedValue={(value) =>
             setUpdateRequest((prevState) => ({ ...prevState, interest: value }))
           }
+          textAlign={"center"}
         ></StyledSelect>
       </StyledDiv>
       <StyledDiv style={{ marginTop: "auto" }}>

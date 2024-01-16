@@ -31,7 +31,7 @@
 }
 
 .options-menu {
-  width: 300px;
+  width: 25vw;
   background-color: #fff;
   height: 100vh;
 
@@ -40,6 +40,19 @@
   flex-direction: column;
   align-items: flex-start;
 
-  z-index: 99;
+  z-index: 1200;
   row-gap: 27px;
+}
+
+@media (max-width: 1200px) {
+  .settings {
+    position: absolute;
+
+    width: 100%;
+    height: 100vh;
+    background-image: url("https://storage.googleapis.com/madcamp/.image/settings.png");
+    background-size: cover; /* Adjust the background size as needed */
+    background-position: center; /* Adjust the background position as needed */
+    background-repeat: no-repeat; /* Prevent background image from repeating */
+  }
 }

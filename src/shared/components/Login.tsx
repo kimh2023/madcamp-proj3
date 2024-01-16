@@ -76,6 +76,7 @@ const Login = ({ isOptionPage }: { isOptionPage?: boolean }) => {
             }))
           }
           type="email"
+          textAlign={"center"}
         />
         <StyledInput
           placeholder="PASSWORD"
@@ -87,6 +88,7 @@ const Login = ({ isOptionPage }: { isOptionPage?: boolean }) => {
             }))
           }
           type="password"
+          textAlign={"center"}
         />
       </StyledForm>
       <StyledDiv style={{ marginTop: "auto" }}>

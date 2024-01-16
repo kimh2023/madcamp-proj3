@@ -1,11 +1,15 @@
 import { useState } from "react";
 import styled from "styled-components";
 
-export const StyledInput = styled.input`
+interface StyledInputProp {
+  textAlign: string;
+}
+
+export const StyledInput = styled.input<StyledInputProp>`
   border-radius: 8px;
   border: 2.5px solid #c1c1c1;
   background: #fff;
-  padding: 12px 0px;
+  padding: 12px 15px;
   width: 100%;
   font-family:
     "Archivo-Black",
@@ -22,7 +26,7 @@ export const StyledInput = styled.input`
     sans-serif;
   font-size: 14px;
   color: #c1c1c1;
-  text-align: center;
+  text-align: ${({ textAlign }) => textAlign};
   max-width: 300px;
 
   &::placeholder {
@@ -40,11 +44,11 @@ const Select = styled.select`
   display: none;
 `;
 
-const SelectBox = styled.div`
+const SelectBox = styled.div<StyledInputProp>`
   border-radius: 8px;
   border: 2.5px solid #c1c1c1;
   background: #fff;
-  padding: 12px 0px;
+  padding: 12px 15px;
   width: 100%;
   z-index: 99;
 
@@ -62,7 +66,7 @@ const SelectBox = styled.div`
     "Helvetica Neue",
     sans-serif;
   font-size: 14px;
-  text-align: center;
+  text-align: ${({ textAlign }) => textAlign};
   color: #c1c1c1;
 
   cursor: pointer;
@@ -103,6 +107,7 @@ const OptionList = styled.div<OptionListProps>`
 
 interface OptionItemProps {
   isLast: boolean;
+  textAlign: string;
 }
 
 const OptionItem = styled.div<OptionItemProps>`
@@ -115,7 +120,7 @@ const OptionItem = styled.div<OptionItemProps>`
   cursor: pointer;
   user-select: none;
 
-  padding: 12px 0px;
+  padding: 12px 15px;
   width: 100%;
 
   font-family:
@@ -132,7 +137,7 @@ const OptionItem = styled.div<OptionItemProps>`
     "Helvetica Neue",
     sans-serif;
   font-size: 14px;
-  text-align: center;
+  text-align: ${({ textAlign }) => textAlign};
   color: #c1c1c1;
 
   &:hover {
@@ -145,11 +150,13 @@ export const StyledSelect = ({
   options,
   selectedValue,
   setSelectedValue,
+  textAlign,
 }: {
   placeholder?: string;
   options: { label: string; value: string }[];
   selectedValue: string;
   setSelectedValue: (value: string) => void;
+  textAlign: string;
 }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -171,7 +178,7 @@ export const StyledSelect = ({
           </option>
         ))}
       </Select>
-      <SelectBox onClick={handleSelectToggle}>
+      <SelectBox onClick={handleSelectToggle} textAlign={textAlign}>
         {selectedValue || placeholder}
       </SelectBox>
       <OptionList isOpen={isOpen}>
@@ -180,6 +187,7 @@ export const StyledSelect = ({
             key={option.value}
             onClick={() => handleOptionSelect(option.label)}
             isLast={index === options.length - 1}
+            textAlign={textAlign}
           >
             {option.label}
           </OptionItem>
