@@ -1,20 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
-const LoginPage = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+const Auth = () => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const dummyUser = {
-    username: 'user',
-    password: 'password',
+    username: "user",
+    password: "password",
   };
 
   const handleLogin = () => {
     if (username === dummyUser.username && password === dummyUser.password) {
       setIsLoggedIn(true);
     } else {
-      alert('Invalid credentials');
+      alert("Invalid credentials");
     }
   };
 
@@ -28,13 +28,18 @@ const LoginPage = () => {
         type="
         text"
         value={username}
-        onChange={e => setUsername(e.target.value)}
+        onChange={(e) => setUsername(e.target.value)}
         placeholder="Username"
       />
-      <input type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="Password" />
+      <input
+        type="password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        placeholder="Password"
+      />
       <button onClick={handleLogin}>Login</button>
     </div>
   );
 };
 
-export default LoginPage;
+export default Auth;

@@ -53,7 +53,7 @@ chrome.runtime.onMessage.addListener((request) => {
   // sender, sendResponse 제거
   if (request.action === "captureTab") {
     captureActiveTab();
-  } else if (request.action === "openLogin  Page") {
+  } else if (request.action === "openLogin") {
     openLoginPage();
   } else if (request.action === "setToken") {
     setToken(request.message);

@@ -20,6 +20,13 @@ const Login = () => {
     }
   };
 
+  const handleSignup = async () => {
+    const signupResponse = await axiosInstance.post("/auth/signup");
+    chrome.runtime.sendMessage({
+      action: "openLogin",
+    });
+  };
+
   return (
     <React.Fragment>
       <header className="App-header">LOGIN</header>
@@ -47,10 +54,7 @@ const Login = () => {
         }
         type="password"
       />
-      <StyledButtonWhite
-        // onClick={handleCaptureClick}
-        style={{ marginTop: "auto" }}
-      >
+      <StyledButtonWhite onClick={handleSignup} style={{ marginTop: "auto" }}>
         SIGNUP
       </StyledButtonWhite>
       <StyledButton

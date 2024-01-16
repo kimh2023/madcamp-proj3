@@ -22,6 +22,10 @@ const Popup = () => {
     };
     chrome.runtime.onMessage.addListener(handleMessage);
 
+    // chrome.runtime.sendMessage({
+    //   action: "setToken",
+    //   message: null,
+    // });
     chrome.runtime.sendMessage({ action: "getToken" }, (token) => {
       // is already logged in?
       console.log("token", token, !!token);
