@@ -16,15 +16,15 @@ const Popup = () => {
       if (message.action === "capturedImage") {
         setScreenshot(message.imageUri);
       } else if (message.action === "session") {
-        setLoginState(!!message.token);
+        setLoginState(!!message.isVerified);
       }
     };
     chrome.runtime.onMessage.addListener(handleMessage);
 
-    chrome.runtime.sendMessage({
-      action: "setSession",
-      message: null,
-    });
+    // chrome.runtime.sendMessage({
+    //   action: "setSession",
+    //   message: null,
+    // });
     chrome.runtime.sendMessage({ action: "getSession" });
 
     return () => {

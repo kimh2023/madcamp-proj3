@@ -1,0 +1,45 @@
+.options-page {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: row;
+}
+
+.settings {
+  padding: 60px 80px;
+
+  flex: 1;
+  height: 100vh;
+  background-image: url("https://storage.googleapis.com/madcamp/.image/settings.png");
+  background-size: cover; /* Adjust the background size as needed */
+  background-position: center; /* Adjust the background position as needed */
+  background-repeat: no-repeat; /* Prevent background image from repeating */
+}
+
+.wishlist {
+  padding: 60px 80px;
+
+  flex: 1;
+  height: 100vh;
+  background-image: url("https://storage.googleapis.com/madcamp/.image/wishlist.png");
+  background-size: cover; /* Adjust the background size as needed */
+  background-position: center; /* Adjust the background position as needed */
+  background-repeat: no-repeat; /* Prevent background image from repeating */
+}
+
+.options-menu {
+  width: 300px;
+  background-color: #fff;
+  height: 100vh;
+
+  padding: 60px 45px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  z-index: 99;
+  row-gap: 27px;
+}

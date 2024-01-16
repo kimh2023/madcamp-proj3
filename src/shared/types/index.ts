@@ -2,6 +2,7 @@ export interface SessionDto {
   token?: string;
   userId?: number;
   isVerified: boolean;
+  signUpTab: number;
 }
 
 export interface SessionContextCompleteDto {

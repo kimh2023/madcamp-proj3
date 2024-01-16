@@ -9,7 +9,7 @@ import {
   StyledHeader1,
   StyledSubheader1,
 } from "../styledComponents/StyledText";
-import { StyledDiv } from "../styledComponents/StyledDiv";
+import { StyledDiv, StyledForm } from "../styledComponents/StyledDiv";
 import { SessionDto } from "../types";
 import { AuthContext } from "@root/src/pages/options/Options";
 
@@ -28,6 +28,7 @@ const Login = ({ isOptionPage }: { isOptionPage?: boolean }) => {
           token: loginResponse.data.token,
           userId: loginResponse.data.user.id,
           isVerified: true,
+          signUpTab: 0,
         } as SessionDto,
       });
     }
@@ -45,10 +46,12 @@ const Login = ({ isOptionPage }: { isOptionPage?: boolean }) => {
           token: signupResponse.data.token,
           userId: signupResponse.data.user.id,
           isVerified: false,
+          signUpTab: 1,
         } as SessionDto,
       });
-      if (isOptionPage) {
-        authContext.setSession({ signUpTab: 1 });
+      if (!isOptionPage) {
+        console.log("CHK"); // don't delete this, without this this doesn't work for some reason
+        chrome.runtime.openOptionsPage();
       }
     }
   };
@@ -62,7 +65,7 @@ const Login = ({ isOptionPage }: { isOptionPage?: boolean }) => {
         )}
       </StyledDiv>
 
-      <StyledDiv style={{ marginTop: "auto" }}>
+      <StyledForm style={{ marginTop: "auto" }}>
         <StyledInput
           placeholder="EMAIL"
           value={authRequest.email}
@@ -85,7 +88,7 @@ const Login = ({ isOptionPage }: { isOptionPage?: boolean }) => {
           }
           type="password"
         />
-      </StyledDiv>
+      </StyledForm>
       <StyledDiv style={{ marginTop: "auto" }}>
         <StyledButtonWhite onClick={handleSignup}>SIGNUP</StyledButtonWhite>
         <StyledButton onClick={handleLogin}>LOGIN</StyledButton>

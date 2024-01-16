@@ -8,15 +8,6 @@ import EmailVerification from "../components/LoginEmailVerification";
 
 const LoginPage = () => {
   const authContext = useContext(AuthContext);
-
-  const [tab, setTab] = useState(2);
-  const fullHash = window.location.hash;
-
-  const hashParams = fullHash.substring(1).split("#");
-  const firstParam = hashParams[0];
-  const secondParam = hashParams[1]; // "1"
-  console.log(authContext);
-
   return (
     <main className="Login">
       <div className="Login-left">

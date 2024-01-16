@@ -69,6 +69,7 @@ const setSession = (value: SessionDto | null) => {
     token: value?.token,
     userId: value?.userId,
     isVerified: value?.isVerified,
+    signUpTab: value?.signUpTab || 0,
   });
 };
 
@@ -80,6 +81,7 @@ const getSession = () => {
       token: session?.token,
       userId: session?.userId,
       isVerified: session?.isVerified,
+      signUpTab: session?.signUpTab || 0,
     });
   });
 };

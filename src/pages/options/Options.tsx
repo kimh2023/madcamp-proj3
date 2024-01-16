@@ -5,6 +5,8 @@ import {
   SessionContextCompleteDto,
   SessionContextDto,
 } from "@root/src/shared/types";
+import SettingsPage from "./pages/SettingsPage";
+import OptionPages from "./pages/OptionPages";
 
 export const AuthContext = createContext<SessionContextCompleteDto>({
   session: { token: null, userId: null, isVerified: false, signUpTab: 0 },
@@ -27,7 +29,15 @@ const Options: React.FC = () => {
           token: message.token,
           userId: message.userId,
           isVerified: message.isVerified,
+          signUpTab: message.signUpTab,
         }));
+
+        if (
+          message.isVerified &&
+          window.location.hash.substring(1).split("#")[0].length == 0
+        ) {
+          window.location.hash = "settings";
+        }
       }
     };
     chrome.runtime.onMessage.addListener(handleMessage);
@@ -50,6 +60,7 @@ const Options: React.FC = () => {
       }}
     >
       {!session?.isVerified && <LoginPage />}
+      {session?.isVerified && <OptionPages />}
     </AuthContext.Provider>
   );
 };

@@ -12,6 +12,7 @@ import {
 import axiosInstance from "@root/utils/axiosInstance";
 import React, { useState, useContext } from "react";
 import { AuthContext } from "../Options";
+import { SessionDto } from "@root/src/shared/types";
 
 const AdditionalInfo = () => {
   const authContext = useContext(AuthContext);
@@ -30,8 +31,15 @@ const AdditionalInfo = () => {
       updateRequest,
     );
     if (updateResponse.data.success == true) {
-      console.log(updateResponse);
-      authContext.setSession({ signUpTab: 2 });
+      chrome.runtime.sendMessage({
+        action: "setSession",
+        message: {
+          token: authContext?.session?.token,
+          userId: authContext?.session?.userId,
+          isVerified: false,
+          signUpTab: 2,
+        } as SessionDto,
+      });
     }
   };
 

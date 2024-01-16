@@ -33,6 +33,7 @@ const EmailVerification = () => {
           token: authContext?.session?.token,
           userId: authContext?.session?.userId,
           isVerified: true,
+          signUpTab: 0,
         } as SessionDto,
       });
     }
