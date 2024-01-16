@@ -1,21 +1,30 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-  baseURL: process.env.BACKEND_URL,
+  baseURL: import.meta.env.VITE_BACKEND_URL,
   timeout: 30000,
 });
 
 axiosInstance.interceptors.request.use(
   async (config) => {
-    chrome.storage.local.get(["token"], (res) => {
-      const token: string = res.token;
+    try {
+      const { token }: { token?: string } = await new Promise((resolve) => {
+        chrome.storage.local.get(["token"], (res) => {
+          resolve(res);
+        });
+      });
 
       if (token) {
         config.headers.Authorization = `Bearer ${token}`;
         config.withCredentials = true;
       }
-    });
-    return config;
+
+      console.log("headers: ", config.headers.Authorization);
+
+      return config;
+    } catch (error) {
+      return Promise.reject(error);
+    }
   },
   (error: Error): Promise<Error> => {
     return Promise.reject(error);

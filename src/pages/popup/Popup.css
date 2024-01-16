@@ -4,10 +4,9 @@
   height: 100%;
   width: 100%;
   padding: 45px;
-  box-sizing: border-box;
   background-color: #282c34;
 
-  background-image: url('https://storage.googleapis.com/madcamp/.image/popup.png');
+  background-image: url("https://storage.googleapis.com/madcamp/.image/popup.png");
   background-size: cover; /* Adjust the background size as needed */
   background-position: center; /* Adjust the background position as needed */
   background-repeat: no-repeat; /* Prevent background image from repeating */
@@ -22,7 +21,7 @@
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 5vmin);
-  margin-top: 90px;
+  margin-top: 70px;
 }
 
 .App-link {
