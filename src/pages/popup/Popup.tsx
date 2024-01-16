@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "@pages/popup/Popup.css";
 import withSuspense from "@src/shared/hoc/withSuspense";
-import { StyledButton } from "@root/src/shared/styledComponents/StyledButton";
 import withErrorBoundary from "@src/shared/hoc/withErrorBoundary";
 import Search from "./components/Search";
 import Login from "../../shared/components/Login";
@@ -11,6 +10,7 @@ const Popup = () => {
   const [loginState, setLoginState] = useState(false);
 
   useEffect(() => {
+    // 로그인 상태를 문자열로 변환하여 저장
     const handleMessage = (message) => {
       // sender, sendResponse 제거
       if (message.action === "capturedImage") {
@@ -19,12 +19,12 @@ const Popup = () => {
         setLoginState(!!message.isVerified);
       }
     };
-    chrome.runtime.onMessage.addListener(handleMessage);
 
     // chrome.runtime.sendMessage({
     //   action: "setSession",
     //   message: null,
     // });
+    chrome.runtime.onMessage.addListener(handleMessage);
     chrome.runtime.sendMessage({ action: "getSession" });
 
     return () => {
@@ -35,8 +35,6 @@ const Popup = () => {
   return (
     <div className="App">
       {loginState ? <Search /> : <Login />}
-      {/* {loginState ? <Login /> : <Search />} */}
-
       {screenshot && (
         <img
           src={screenshot}
@@ -49,6 +47,6 @@ const Popup = () => {
 };
 
 export default withErrorBoundary(
-  withSuspense(Popup, <div> Loading ... </div>),
-  <div> Error Occur </div>,
+  withSuspense(Popup, <div>Loading...</div>),
+  <div>Error Occur</div>,
 );
