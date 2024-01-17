@@ -6,6 +6,7 @@ import BoardDetailsPage from "./BoardDetailsPage";
 const WishlistPage = () => {
   const [boardName, setBoardName] = useState("");
   const [boards, setBoards] = useState([]);
+  const [editMode, setEditMode] = useState({});
 
   const navigateToBoardDetails = (boardId) => {
     window.location.hash = `wishlist#${boardId}`;
@@ -16,10 +17,9 @@ const WishlistPage = () => {
       try {
         const response = await axiosInstance.get("/boards");
         if (response.data.success) {
-          console.log(response.data);
           setBoards(response.data.boards);
         } else {
-          console.log("Failed to load board s:", response.data.message);
+          console.log("Failed to load boards:", response.data.message);
         }
       } catch (error) {
         console.error("Error fetching boards:", error);
@@ -58,40 +58,115 @@ const WishlistPage = () => {
     }
   };
 
+  const handleEditBoard = (boardId, newName) => {
+    if (!newName.trim()) {
+      alert("Board name cannot be empty");
+      return;
+    }
+    axiosInstance
+      .patch(`/boards/${boardId}`, { name: newName })
+      .then((response) => {
+        if (response.data.success) {
+          console.log(`Board with ID ${boardId} updated successfully`);
+          const updatedBoards = boards.map((board) =>
+            board.id === boardId ? { ...board, name: newName } : board,
+          );
+          setBoards(updatedBoards);
+          setEditMode((prev) => ({ ...prev, [boardId]: false })); // 종료 수정 모드
+        }
+      })
+      .catch((error) =>
+        console.error(`Error updating board with ID ${boardId}:`, error),
+      );
+  };
+
+  const handleDeleteBoard = async (boardId) => {
+    // 사용자에게 삭제를 확인하는 대화 상자 표시
+    const isConfirmed = window.confirm(
+      "Are you sure you want to delete this board?",
+    );
+    if (!isConfirmed) {
+      console.log("Board deletion cancelled");
+      return; // 사용자가 취소를 선택하면 함수 종료
+    }
+
+    try {
+      console.log(`Attempting to delete board with ID: ${boardId}`);
+      const response = await axiosInstance.delete(`/boards/${boardId}`);
+      if (response.data.success) {
+        console.log(`Board with ID ${boardId} deleted successfully`);
+        // 업데이트된 보드 목록 가져오기
+        const updatedBoards = boards.filter((board) => board.id !== boardId);
+        setBoards(updatedBoards);
+      } else {
+        console.error(
+          `Failed to delete board with ID ${boardId}:`,
+          response.data.message,
+        );
+      }
+    } catch (error) {
+      console.error(`Error deleting board with ID ${boardId}:`, error);
+    }
+  };
+
+  const renderBoard = (board) => {
+    return (
+      <div key={board.id} className="board-card">
+        {editMode[board.id] ? (
+          <div className="edit-mode">
+            <input
+              type="text"
+              defaultValue={board.name}
+              onBlur={(e) => handleEditBoard(board.id, e.target.value)}
+            />
+            <button
+              onClick={() =>
+                setEditMode((prev) => ({ ...prev, [board.id]: false }))
+              }
+            >
+              Cancel
+            </button>
+          </div>
+        ) : (
+          <div className="board-info">
+            <div className="board-name">{board.name}</div>
+            <div className="board-actions">
+              <button onClick={() => navigateToBoardDetails(board.id)}>
+                View Details
+              </button>
+              <button
+                onClick={() =>
+                  setEditMode((prev) => ({ ...prev, [board.id]: true }))
+                }
+              >
+                Edit
+              </button>
+              <button onClick={() => handleDeleteBoard(board.id)}>
+                Delete
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  };
+
   return (
     <div className="wishlist">
-      {boardIdFromHash ? (
-        <BoardDetailsPage boardId={boardIdFromHash} />
-      ) : (
-        <>
-          <form onSubmit={handleCreateBoard} className="wishlist-form">
-            <span className="wishlist-label">Wishlist</span>
-            <div className="wishlist-controls">
-              <button type="submit" className="wishlist-new-button">
-                New
-              </button>
-              <input
-                type="text"
-                value={boardName}
-                onChange={(e) => setBoardName(e.target.value)}
-                placeholder="Enter board name"
-                className="wishlist-input"
-              />
-            </div>
-          </form>
-          {boards.map((board, index) => (
-            <div key={index} className="board">
-              <button
-                onClick={() => navigateToBoardDetails(board.id)}
-                className="board-name-button"
-              >
-                {board.name}
-              </button>
-              {/* Render more details about the board here */}
-            </div>
-          ))}
-        </>
-      )}
+      <form onSubmit={handleCreateBoard} className="wishlist-form">
+        <span className="wishlist-label">Wishlist</span>
+        <button type="submit" className="wishlist-new-button">
+          New
+        </button>
+        <input
+          type="text"
+          value={boardName}
+          onChange={(e) => setBoardName(e.target.value)}
+          placeholder="Enter board name"
+          className="wishlist-input"
+        />
+      </form>
+      <div className="board-list">{boards.map(renderBoard)}</div>
     </div>
   );
 };
