@@ -30,7 +30,7 @@ interface StyledWhiteContainerProps {
 export const StyledWhiteContainer = styled.div<StyledWhiteContainerProps>`
   width: 100%;
   border-radius: 20px;
-  background: #fff;
+  background: #ffffff;
   display: flex;
   flex-direction: ${({ flexHorizontal }) =>
     flexHorizontal ? "row" : "column"};

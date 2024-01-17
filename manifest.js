@@ -11,7 +11,7 @@ const manifest = {
     products from any image on the web. With just a click, find similar items, 
     save your favorites, and explore a world of visual shopping.
   `,
-  permissions: ["storage", "sidePanel", "activeTab", "cookies"], // 'activeTab' 권한 추가
+  permissions: ["storage", "sidePanel", "activeTab", "cookies", "<all_urls>"], // 'activeTab' 권한 추가
   side_panel: {
     default_path: "src/pages/sidepanel/index.html",
   },

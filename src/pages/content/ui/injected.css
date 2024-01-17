@@ -1,0 +1,29 @@
+.overlay {
+  position: fixed;
+  height: 100vh !important;
+  width: 100vw;
+  background: rgba(0, 0, 0, 0.54);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#shadow-root {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1000000;
+}
+.image-container {
+  position: relative;
+  height: 80%;
+  border-radius: 20px;
+  background: #ffffff;
+  padding: 40px;
+}
+.inside-image-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
