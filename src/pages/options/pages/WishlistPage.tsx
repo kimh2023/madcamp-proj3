@@ -2,6 +2,15 @@ import { useState, useEffect } from "react";
 import axiosInstance from "@root/utils/axiosInstance";
 import "@pages/options/style/OptionPage.css";
 import BoardDetailsPage from "./BoardDetailsPage";
+import {
+  StyledBoardText,
+  StyledHeader1,
+  StyledOptionsGrayText,
+} from "@root/src/shared/styledComponents/StyledText";
+import { StyledButton } from "@root/src/shared/styledComponents/StyledButton";
+import { StyledInput } from "@root/src/shared/styledComponents/StyledInput";
+import { Button } from "@chakra-ui/react";
+import { MdModeEdit, MdDelete, MdCancel } from "react-icons/md";
 
 const WishlistPage = () => {
   const [boardName, setBoardName] = useState("");
@@ -124,63 +133,82 @@ const WishlistPage = () => {
   const renderBoard = (board) => {
     return (
       <div key={board.id} className="board-card">
-        {editMode[board.id] ? (
-          <div className="edit-mode">
-            <input
-              type="text"
-              defaultValue={board.name}
-              onBlur={(e) => handleEditBoard(board.id, e.target.value)}
-            />
-            <button
-              onClick={() =>
-                setEditMode((prev) => ({ ...prev, [board.id]: false }))
-              }
-            >
-              Cancel
-            </button>
-          </div>
-        ) : (
-          <div className="board-info">
-            <div className="board-name">{board.name}</div>
+        <button
+          className="board-info"
+          onClick={() => navigateToBoardDetails(board.id)}
+        >
+          {editMode[board.id] ? (
             <div className="board-actions">
-              <button onClick={() => navigateToBoardDetails(board.id)}>
-                View Details
-              </button>
-              <button
-                onClick={() =>
-                  setEditMode((prev) => ({ ...prev, [board.id]: true }))
-                }
-              >
-                Edit
-              </button>
-              <button onClick={() => handleDeleteBoard(board.id)}>
-                Delete
-              </button>
+              <StyledInput
+                type="text"
+                defaultValue={board.name}
+                onBlur={(e) => handleEditBoard(board.id, e.target.value)}
+                textAlign={"left"}
+              />
+              <MdCancel
+                onClick={(e) => {
+                  setEditMode((prev) => ({ ...prev, [board.id]: false }));
+                  e.stopPropagation();
+                }}
+                size={30}
+              />
             </div>
-          </div>
-        )}
+          ) : (
+            <div className="board-actions">
+              <StyledBoardText
+                className="board-name"
+                style={{ textAlign: "left", width: "auto" }}
+              >
+                {board.name}
+              </StyledBoardText>
+              <MdModeEdit
+                onClick={(e) => {
+                  setEditMode((prev) => ({ ...prev, [board.id]: true }));
+                  e.stopPropagation();
+                }}
+                size={20}
+              />
+              <MdDelete
+                onClick={(e) => {
+                  handleDeleteBoard(board.id);
+                  e.stopPropagation();
+                }}
+                size={20}
+              />
+            </div>
+          )}
+        </button>
       </div>
     );
   };
 
   if (currentBoardId) {
-    return <BoardDetailsPage boardId={currentBoardId} />;
+    return (
+      <div className="wishlist">
+        <BoardDetailsPage boardId={currentBoardId} />
+      </div>
+    );
   }
 
   return (
     <div className="wishlist">
+      <StyledHeader1 style={{ textAlign: "left" }}>WISHLIST</StyledHeader1>
       <form onSubmit={handleCreateBoard} className="wishlist-form">
-        <span className="wishlist-label">Wishlist</span>
-        <button type="submit" className="wishlist-new-button">
-          New
-        </button>
-        <input
+        <StyledInput
           type="text"
           value={boardName}
           onChange={(e) => setBoardName(e.target.value)}
           placeholder="Enter board name"
           className="wishlist-input"
+          textAlign={"left"}
         />
+        <StyledButton
+          type="submit"
+          className="wishlist-new-button"
+          style={{ width: "auto" }}
+        >
+          New
+        </StyledButton>
       </form>
       <div className="board-list">{boards.map(renderBoard)}</div>
     </div>

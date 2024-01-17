@@ -36,3 +36,14 @@ export const StyledWhiteContainer = styled.div<StyledWhiteContainerProps>`
     flexHorizontal ? "row" : "column"};
   padding: 60px 50px;
 `;
+
+export const StyledWhiteContainerSmall = styled.div`
+  flex: 1;
+  border-radius: 20px;
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+  padding: 60px 50px;
+  cursor: pointer;
+`;

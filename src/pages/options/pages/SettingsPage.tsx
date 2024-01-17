@@ -42,6 +42,7 @@ const SettingsPage = () => {
           name: userResponse?.data?.user?.name,
           interest: userResponse?.data?.user?.interest,
         });
+        console.log(userResponse.data);
       }
     };
     getUser();

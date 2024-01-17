@@ -8,6 +8,7 @@
   background-size: cover; /* Adjust the background size as needed */
   background-position: center; /* Adjust the background position as needed */
   background-repeat: no-repeat; /* Prevent background image from repeating */
+  background-attachment: fixed;
 }
 
 .Login-left {

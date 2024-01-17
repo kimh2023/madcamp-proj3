@@ -23,7 +23,7 @@ export const StyledButton = styled.button`
     "Droid Sans",
     "Helvetica Neue",
     sans-serif;
-  font-size: 16px;
+  font-size: 13px;
   max-width: 300px;
 
   &:hover {
@@ -53,7 +53,7 @@ export const StyledButtonWhite = styled.button`
     "Droid Sans",
     "Helvetica Neue",
     sans-serif;
-  font-size: 16px;
+  font-size: 13px;
   max-width: 300px;
 
   &:hover {

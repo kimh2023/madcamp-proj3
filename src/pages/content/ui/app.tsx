@@ -12,19 +12,21 @@ export default function App() {
     useState<LocalizedObjectAnnotationDto[]>();
 
   useEffect(() => {
-    // const port = chrome.runtime.connect({ name: "knockknock" });
-    // port.postMessage({ action: "getSession" });
-    // port.onMessage.addListener((message) => {
-    //   console.log("inapp", message);
-    //   if (message.action === "sessionImage") {
-    //     setImageURI(message.base64);
-    //     setCapturedImage(message.localizedObjectAnnotations);
-    //   }
-    // });
+    console.log("hi?");
+    const port = chrome.runtime.connect({ name: "knockknock" });
+    port.postMessage({ action: "getSession" });
+    port.onMessage.addListener((message) => {
+      console.log("inapp", message);
+      if (message.action === "sessionImage") {
+        setImageURI(message.base64);
+        setCapturedImage(message.localizedObjectAnnotations);
+      }
+    });
 
     chrome.runtime.onConnect.addListener(function (port) {
       console.assert(port.name === "knockback");
       port.onMessage.addListener(function (msg) {
+        console.log("sent to me");
         if (msg.action === "openOverlay") {
           setRenderApp(true);
           setImageURI(msg.base64);

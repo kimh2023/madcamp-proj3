@@ -2,6 +2,17 @@ import React, { useEffect, useState } from "react";
 import axiosInstance from "@root/utils/axiosInstance";
 import "@pages/options/style/OptionPage.css";
 import PropTypes from "prop-types";
+import {
+  StyledBoardText,
+  StyledHeader1,
+  StyledOptionsGrayText,
+  StyledSubheader1,
+} from "@root/src/shared/styledComponents/StyledText";
+import {
+  StyledWhiteContainer,
+  StyledWhiteContainerSmall,
+} from "@root/src/shared/styledComponents/StyledDiv";
+import { GridContainer } from "../../sidepanel/components/StyledComponents";
 
 const BoardDetailsPage = ({ boardId }) => {
   const [boardDetails, setBoardDetails] = useState(null);
@@ -34,24 +45,31 @@ const BoardDetailsPage = ({ boardId }) => {
 
   console.log("Rendering board details:", boardDetails);
   return (
-    <div>
-      <h1>{boardDetails.board.name}</h1>
-      <div>
+    <React.Fragment>
+      <StyledHeader1 style={{ textAlign: "left", marginBottom: "50px" }}>
+        {boardDetails.board.name}
+      </StyledHeader1>
+      <GridContainer>
         {boardDetails.pins.map((pin, index) => {
           console.log(`Rendering pin ${index + 1}:`, pin);
           return (
-            <div key={index} className="pin">
+            <StyledWhiteContainerSmall
+              key={index}
+              className="pin"
+              onClick={() => window.open(pin.link, "_blank")}
+            >
               <h3>{pin.name}</h3>
-              <p>Price: ${pin.price}</p>
+              <StyledSubheader1
+                style={{ textAlign: "left", marginBottom: "10px" }}
+              >
+                Price: ${pin.price}
+              </StyledSubheader1>
               <img src={pin.image} alt={pin.name} />
-              <a href={pin.link} target="_blank" rel="noopener noreferrer">
-                View Product
-              </a>
-            </div>
+            </StyledWhiteContainerSmall>
           );
         })}
-      </div>
-    </div>
+      </GridContainer>
+    </React.Fragment>
   );
 };
 

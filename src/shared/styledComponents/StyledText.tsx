@@ -79,3 +79,21 @@ export const StyledOptionsGrayText = styled.div`
   align-items: center;
   justify-content: center;
 `;
+
+export const StyledBoardText = styled.div`
+  font-size: 14px;
+  font-family:
+    "Archivo-Black",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    "Roboto",
+    "Oxygen",
+    "Ubuntu",
+    "Cantarell",
+    "Fira Sans",
+    "Droid Sans",
+    "Helvetica Neue",
+    sans-serif;
+  color: #000;
+`;

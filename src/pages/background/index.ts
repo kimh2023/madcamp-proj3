@@ -141,25 +141,28 @@ chrome.runtime.onConnect.addListener(function (port) {
   });
 });
 
-const sendContentScript = async () => {
-  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-    console.log("BACK: tabs", tabs);
-    if (tabs.length === 0) {
-      console.log("BACK: no tabs, is devtool open??");
-      return;
-    }
-    const tab = tabs[0];
-    const port = chrome.tabs.connect(tab.id, {
-      name: "knockback",
-    });
-    chrome.storage.local.get(["sessionImage"], (res) => {
-      const sessionImage: SessionImageDto = res.sessionImage;
-      port.postMessage({
-        action: "openOverlay",
-        blobUrl: sessionImage?.blobUrl,
-        localizedObjectAnnotations: sessionImage?.localizedObjectAnnotations,
-        base64: sessionImage?.base64,
+function sendContentScript() {
+  return new Promise((resolve, reject) => {
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      console.log("BACK: tabs", tabs);
+      if (tabs.length === 0) {
+        console.log("BACK: no tabs, is devtool open??");
+        return;
+      }
+      const tab = tabs[0];
+      const port = chrome.tabs.connect(tab.id, {
+        name: "knockback",
+      });
+      chrome.storage.local.get(["sessionImage"], (res) => {
+        const sessionImage: SessionImageDto = res.sessionImage;
+        port.postMessage({
+          action: "openOverlay",
+          blobUrl: sessionImage?.blobUrl,
+          localizedObjectAnnotations: sessionImage?.localizedObjectAnnotations,
+          base64: sessionImage?.base64,
+        });
+        resolve(null);
       });
     });
   });
-};
+}

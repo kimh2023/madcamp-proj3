@@ -29,3 +29,4 @@ shadowRoot.appendChild(styleElement);
  */
 
 createRoot(rootIntoShadow).render(<App />);
+console.log("content");
