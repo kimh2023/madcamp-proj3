@@ -31,7 +31,6 @@
 .wishlist-form {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   margin-bottom: 20px;
 }
 
@@ -40,7 +39,18 @@
   font-weight: bold;
   margin-right: 10px;
 }
+.wishlist-controls {
+  display: flex;
+  align-items: center;
+}
 
+.wishlist-input {
+  width: 200px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-right: 10px; /* Remove margin to ensure no gap */
+}
 
 .wishlist-new-button {
   padding: 10px 20px;
@@ -53,13 +63,6 @@
   margin-right: 10px; /* Margin to separate button from input */
 }
 
-.wishlist-input {
-  width: 200px;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  margin-right: 0; /* Remove margin to ensure no gap */
-}
 
 
 .options-menu {

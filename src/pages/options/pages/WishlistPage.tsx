@@ -7,10 +7,22 @@ const WishlistPage = () => {
   const [boardName, setBoardName] = useState("");
   const [boards, setBoards] = useState([]);
   const [editMode, setEditMode] = useState({});
+  const [currentBoardId, setCurrentBoardId] = useState(null);
 
-  const navigateToBoardDetails = (boardId) => {
-    window.location.hash = `wishlist#${boardId}`;
-  };
+  useEffect(() => {
+    const handleHashChange = () => {
+      const newBoardId = getBoardIdFromHash();
+      console.log(newBoardId);
+      setCurrentBoardId(newBoardId);
+    };
+
+    window.addEventListener("hashchange", handleHashChange);
+    handleHashChange(); // Call it to check the initial hash
+
+    return () => {
+      window.removeEventListener("hashchange", handleHashChange);
+    };
+  }, []);
 
   useEffect(() => {
     const loadBoards = async () => {
@@ -35,8 +47,6 @@ const WishlistPage = () => {
       ? hashParts[2]
       : null;
   };
-
-  const boardIdFromHash = getBoardIdFromHash();
 
   const handleCreateBoard = async (e) => {
     e.preventDefault();
@@ -108,7 +118,9 @@ const WishlistPage = () => {
       console.error(`Error deleting board with ID ${boardId}:`, error);
     }
   };
-
+  const navigateToBoardDetails = (boardId) => {
+    window.location.hash = `wishlist#${boardId}`;
+  };
   const renderBoard = (board) => {
     return (
       <div key={board.id} className="board-card">
@@ -151,6 +163,10 @@ const WishlistPage = () => {
     );
   };
 
+  if (currentBoardId) {
+    return <BoardDetailsPage boardId={currentBoardId} />;
+  }
+
   return (
     <div className="wishlist">
       <form onSubmit={handleCreateBoard} className="wishlist-form">
@@ -172,3 +188,10 @@ const WishlistPage = () => {
 };
 
 export default WishlistPage;
+
+function getBoardIdFromHash() {
+  const hashParts = window.location.hash.split("#");
+  return hashParts.length === 3 && hashParts[1] === "wishlist"
+    ? hashParts[2]
+    : null;
+}
