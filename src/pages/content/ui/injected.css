@@ -16,7 +16,11 @@
 }
 .image-container {
   position: relative;
-  height: 80%;
+  display: flex;
+
+  height: 70% !important;
+  overflow: hidden;
+
   border-radius: 20px;
   background: #ffffff;
   padding: 40px;
@@ -24,6 +28,7 @@
 .inside-image-container {
   position: relative;
   display: flex;
+  flex: 1;
   flex-direction: column;
   overflow: hidden;
 }

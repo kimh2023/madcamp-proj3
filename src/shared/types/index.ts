@@ -28,6 +28,7 @@ export interface ProductDto {
   link: string;
   price: number;
   rating: number;
+  pinned: boolean;
 }
 
 export interface LocalizedObjectAnnotationDto {

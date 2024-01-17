@@ -78,7 +78,12 @@ export default function App() {
     <button className="overlay" onClick={() => setRenderApp(false)}>
       <div className="image-container">
         <div className="inside-image-container">
-          <img src={imageURI} alt="" style={{ borderRadius: "10px" }}></img>
+          <img
+            className="image"
+            src={imageURI}
+            alt=""
+            style={{ borderRadius: "10px" }}
+          ></img>
           {renderRectangles()}
         </div>
       </div>

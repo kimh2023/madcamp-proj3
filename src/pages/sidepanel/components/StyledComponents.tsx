@@ -1,6 +1,8 @@
 import { ProductDto } from "@root/src/shared/types";
 import styled from "styled-components";
-import { TbPin } from "react-icons/tb";
+import { TbPin, TbPinFilled } from "react-icons/tb";
+import axiosInstance from "@root/utils/axiosInstance";
+import { useState } from "react";
 
 export const StyledHeaderSideBar = styled.div`
   display: flex;
@@ -46,6 +48,33 @@ const HoverContainerInnerItem = styled.a`
   row-gap: 10px;
   max-width: calc(100% + 30px);
 `;
+
+const PinButton = ({ product }: { product: ProductDto }) => {
+  const [pinned, setPinned] = useState(product.pinned);
+  const savePin = async () => {
+    await axiosInstance
+      .post("/boards/1/pins", {
+        productId: product.id,
+        note: "",
+      })
+      .then((response) => {
+        if (response.data.success) {
+          alert("Successfully pinned");
+          setPinned((prevState) => !prevState);
+        }
+      });
+  };
+  console.log(product);
+  return (
+    <div style={{ position: "absolute", top: 0, right: 0, cursor: "pointer" }}>
+      {pinned ? (
+        <TbPinFilled color={"#fff"} size={25} />
+      ) : (
+        <TbPin color={"#fff"} size={25} onClick={() => savePin()} />
+      )}
+    </div>
+  );
+};
 
 const StyledHoverContainer = styled.div<StyledHoverContainerProps>`
   position: relative;
@@ -122,20 +151,24 @@ const StyledHoverTextSmall = styled.div`
   text-overflow: ellipsis;
 `;
 
+// const BoardPage = () => {
+
+//   return (
+
+//   )
+// }
+
 export const StyledImages = ({ product }: { product: ProductDto }) => {
+  const [boardPageOpen, setBoardPageOpen] = useState(false);
   return (
     <StyledHoverContainer imageUrl={product.image}>
+      <PinButton product={product} />
       <HoverContainerInnerItem
         href={product.link}
         onClick={() => {
           window.open(product.link, "_blank");
         }}
       >
-        <TbPin
-          color={"#fff"}
-          size={25}
-          style={{ position: "absolute", top: 0, right: 0 }}
-        />
         <StyledHoverText>{product.name.substring(0, 40)}</StyledHoverText>
         <StyledHoverTextSmall>${product.price}</StyledHoverTextSmall>
       </HoverContainerInnerItem>
