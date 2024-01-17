@@ -10,36 +10,69 @@
 
 .settings {
   padding: 60px 80px;
-
   flex: 1;
   height: 100vh;
   background-image: url("https://storage.googleapis.com/madcamp/.image/settings.png");
-  background-size: cover; /* Adjust the background size as needed */
-  background-position: center; /* Adjust the background position as needed */
-  background-repeat: no-repeat; /* Prevent background image from repeating */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .wishlist {
   padding: 60px 80px;
-
   flex: 1;
   height: 100vh;
   background-image: url("https://storage.googleapis.com/madcamp/.image/wishlist.png");
-  background-size: cover; /* Adjust the background size as needed */
-  background-position: center; /* Adjust the background position as needed */
-  background-repeat: no-repeat; /* Prevent background image from repeating */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
+
+.wishlist-form {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.wishlist-label {
+  font-size: 24px;
+  font-weight: bold;
+  margin-right: 10px;
+}
+.wishlist-controls {
+  display: flex;
+  align-items: center;
+}
+
+.wishlist-input {
+  width: 200px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-right: 10px; /* Remove margin to ensure no gap */
+}
+
+.wishlist-new-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  margin-right: 10px; /* Margin to separate button from input */
+}
+
+
 
 .options-menu {
   width: 25vw;
   background-color: #fff;
   height: 100vh;
-
   padding: 60px 45px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-
   z-index: 1200;
   row-gap: 27px;
 }
@@ -47,13 +80,12 @@
 @media (max-width: 1200px) {
   .settings {
     position: absolute;
-
     width: 100%;
     height: 100vh;
     background-image: url("https://storage.googleapis.com/madcamp/.image/settings.png");
-    background-size: cover; /* Adjust the background size as needed */
-    background-position: center; /* Adjust the background position as needed */
-    background-repeat: no-repeat; /* Prevent background image from repeating */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
   }
 }
 
