@@ -49,7 +49,12 @@ function captureActiveTab() {
 chrome.runtime.onMessage.addListener((request) => {
   // sender, sendResponse 제거
   if (request.action === "captureTab") {
+    console.log("1234");
     captureActiveTab();
+    return true;
+  } else if (request.action == "capturedImage") {
+    console.log("11111");
+    sendImage(request.imageUri);
     return true;
   } else if (request.action === "setSession") {
     setSession(request.message);
@@ -85,3 +90,20 @@ const getSession = () => {
     });
   });
 };
+
+async function sendImage(imageUri) {
+  const formData = new FormData();
+  formData.append("image", imageUri);
+
+  try {
+    const response = await fetch("/search", {
+      method: "POST",
+      body: formData,
+    });
+
+    const data = await response.json();
+    console.log("API Response:", data);
+  } catch (error) {
+    console.error("Error sending image to API:", error);
+  }
+}
